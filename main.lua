@@ -149,10 +149,10 @@ end
 function OnCollisionEnter(a, b, contact)
 	if a == player.fixture or b == player.fixture then
 		local other = a == player.fixture and b or a
-		other:destroy()
 		ud = other:getUserData()
 		ud.state = "ded"
 		player.health = player.health - 1
+		other:destroy()
 		return
 	end
 
@@ -179,8 +179,5 @@ function OnCollisionEnter(a, b, contact)
 	end
 end
 
-function onCollisionExit(a, b, contact)
-	print("ok")
-end
 
-world:setCallbacks(OnCollisionEnter, OnCollisionExit)
+world:setCallbacks(OnCollisionEnter)

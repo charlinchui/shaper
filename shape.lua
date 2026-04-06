@@ -1,6 +1,6 @@
 Shape = Object:extend()
 
-function Shape:new(x, y, sprite, speed, w, s)
+function Shape:new(x, y, sprite, speed, w, s, team)
 	self.x = x
 	self.y = y
 	self.s = s
@@ -11,6 +11,10 @@ function Shape:new(x, y, sprite, speed, w, s)
 	self.body = love.physics.newBody(w, self.x, self.y, "dynamic")
 	self.shape = love.physics.newRectangleShape(self.width, self.height)
 	self.fixture = love.physics.newFixture(self.body, self.shape)
+	self.state = "alive"
+	self.team = team
+
+	self.fixture:setUserData(self)
 end
 
 function Shape:update(dt)
@@ -19,7 +23,9 @@ function Shape:update(dt)
 end
 
 function Shape:draw()
-	love.graphics.draw(self.sprite, self.x, self.y)
+	if self.state == "alive" then
+		love.graphics.draw(self.sprite, self.x, self.y)
+	end
 end
 
 return Shape
